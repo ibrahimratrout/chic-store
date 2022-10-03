@@ -1,18 +1,13 @@
+import 'package:chic_store/routes.dart';
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(MainPage());
 }
 
-class MyApp extends StatelessWidget {
-
-
+class MainPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home:Scaffold(appBar: AppBar()),
-
-
-    );
+    return MaterialApp(initialRoute: '/login', routes: Routes);
   }
 }
