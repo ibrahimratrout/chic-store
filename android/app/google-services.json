@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "855543465106",
+    "project_id": "chic-store-688f9",
+    "storage_bucket": "chic-store-688f9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:855543465106:android:047198befe7ec244acd24b",
+        "android_client_info": {
+          "package_name": "net.chic.store.ps.chic_store"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "855543465106-ot9iothib1drq16u00sklkv3eucom8pa.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB5QdxuKKPAs9lUjMR3fPk-aU5mQtXCBv0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "855543465106-ot9iothib1drq16u00sklkv3eucom8pa.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
