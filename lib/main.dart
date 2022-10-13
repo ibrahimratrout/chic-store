@@ -12,6 +12,6 @@ Future<void>main()async{
 class MainPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(initialRoute: '/login', routes: kRoutes);
+    return MaterialApp(initialRoute: '/homepage', routes: kRoutes);
   }
 }

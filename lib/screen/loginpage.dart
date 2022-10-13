@@ -1,10 +1,11 @@
 import 'dart:async';
-import 'dart:convert';
 import 'package:encrypt/encrypt.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:encrypt/encrypt.dart' as encrypt;
+
+import '../constants/constants.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -70,9 +71,9 @@ class _LoginPageState extends State<LoginPage> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-              title: Text("Login Error ",textAlign: TextAlign.center,),titleTextStyle:TextStyle(color: Colors.black),
+              title: Text("Login Error ",textAlign: TextAlign.center,),titleTextStyle:TextStyle(color: kTextColor),
               content:
-                  Text("the phone number or password entered is incorrect try again ",textAlign: TextAlign.center,style: TextStyle(color: Colors.black)),
+                  Text("the phone number or password entered is incorrect try again ",textAlign: TextAlign.center,style: TextStyle(color: kTextColor)),
               actions: [
                 TextButton(
                     onPressed: () {
@@ -128,7 +129,7 @@ class _LoginPageState extends State<LoginPage> {
                         child: Text(
                           "WELCOME ",
                           style: TextStyle(
-                              color: Colors.black,
+                              color: kTextColor,
                               fontSize: 40,
                               fontWeight: FontWeight.bold),
                         ),
@@ -148,8 +149,8 @@ class _LoginPageState extends State<LoginPage> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Container(
-                                margin: EdgeInsets.all(3),
-                                padding: EdgeInsets.all(4),
+                                margin: EdgeInsets.all(kDefaultTextFieldMargin),
+                                padding: EdgeInsets.all(kDefaultCategoryPaddin),
                                 child: TextFormField(
                                   decoration:
                                       InputDecoration(labelText: "Phone"),
@@ -173,8 +174,8 @@ class _LoginPageState extends State<LoginPage> {
                                 ),
                               ),
                               Container(
-                                margin: EdgeInsets.all(3),
-                                padding: EdgeInsets.all(4),
+                                margin: EdgeInsets.all(kDefaultTextFieldMargin),
+                                padding: EdgeInsets.all(kDefaultCategoryPaddin),
                                 child: TextFormField(
                                   decoration:
                                       InputDecoration(labelText: "Password"),
@@ -231,7 +232,7 @@ class _LoginPageState extends State<LoginPage> {
                                     },
                                     child: Text(
                                       "Create New Accent",
-                                      style: TextStyle(color: Colors.black),
+                                      style: TextStyle(color: kTextColor),
                                     ),
                                   )),
                             ],

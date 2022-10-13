@@ -1,3 +1,4 @@
+import 'package:chic_store/constants/constants.dart';
 import 'package:chic_store/screen/verify_code.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:encrypt/encrypt.dart';
@@ -156,8 +157,8 @@ class _SignUpState extends State<SignUp> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Container(
-                            margin: EdgeInsets.all(3),
-                            padding: EdgeInsets.all(4),
+                            margin: EdgeInsets.all(kDefaultTextFieldMargin),
+                            padding: EdgeInsets.all(kDefaultCategoryPaddin),
                             child: TextFormField(
                               decoration: InputDecoration(labelText: "Name"),
                               keyboardType: TextInputType.text,
@@ -176,8 +177,8 @@ class _SignUpState extends State<SignUp> {
                             ),
                           ),
                           Container(
-                            margin: EdgeInsets.all(3),
-                            padding: EdgeInsets.all(4),
+                            margin: EdgeInsets.all(kDefaultTextFieldMargin),
+                            padding: EdgeInsets.all(kDefaultCategoryPaddin),
                             child: TextFormField(
                               decoration: InputDecoration(labelText: "Phone"),
                               keyboardType: TextInputType.phone,
@@ -198,8 +199,8 @@ class _SignUpState extends State<SignUp> {
                             ),
                           ),
                           Container(
-                            margin: EdgeInsets.all(3),
-                            padding: EdgeInsets.all(4),
+                            margin: EdgeInsets.all(kDefaultTextFieldMargin),
+                            padding: EdgeInsets.all(kDefaultCategoryPaddin),
                             child: TextFormField(
                               decoration:
                                   InputDecoration(labelText: "Password"),
@@ -218,8 +219,8 @@ class _SignUpState extends State<SignUp> {
                             ),
                           ),
                           Container(
-                            margin: EdgeInsets.all(3),
-                            padding: EdgeInsets.all(4),
+                            margin: EdgeInsets.all(kDefaultTextFieldMargin),
+                            padding: EdgeInsets.all(kDefaultCategoryPaddin),
                             child: TextFormField(
                               decoration: InputDecoration(labelText: "Address"),
                               keyboardType: TextInputType.text,
