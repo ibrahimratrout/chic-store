@@ -59,7 +59,7 @@ class _verifyCodeState extends State<verifyCode> {
                          await Navigator.pushNamed(context, '/login');
 
                      }catch(e){
-                    print("e $e");
+                    print("ex $e");
 
                  }
                },
