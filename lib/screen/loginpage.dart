@@ -107,12 +107,8 @@ class _LoginPageState extends State<LoginPage> {
       child: Stack(children: [
         Container(
           decoration: BoxDecoration(
-              color: Color.fromARGB(252, 255, 251, 251),
-              image: DecorationImage(
-                  alignment: Alignment.topCenter,
-                  image: AssetImage("images/logo.png"),
-                  colorFilter: ColorFilter.mode(
-                      Color.fromARGB(245, 255, 251, 251), BlendMode.darken))),
+              color: kDefaultBackGroundSign_in_up,
+          ),
         ),
         Scaffold(
             backgroundColor: Colors.transparent,
@@ -122,6 +118,12 @@ class _LoginPageState extends State<LoginPage> {
                       mainAxisSize: MainAxisSize.min,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
+                        Container(
+                         child: Image(
+
+                         image: AssetImage("images/logo.png"),
+
+                        ),),
                     Container(
                       margin: EdgeInsets.only(
                           right: 15, left: 15, top: 30, bottom: 15),
@@ -205,7 +207,7 @@ class _LoginPageState extends State<LoginPage> {
                                   style: ElevatedButton.styleFrom(
                                     minimumSize: const Size(300, 50),
                                     maximumSize: const Size(300, 50),
-                                    backgroundColor: Colors.black,
+                                    backgroundColor: kDefaultColorButton,
                                     textStyle: TextStyle(
                                         fontSize: 20,
                                         fontWeight: FontWeight.bold),

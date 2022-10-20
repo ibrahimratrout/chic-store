@@ -16,7 +16,7 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
-  bool findPhone = false;
+  bool? findPhone ;
   var name;
   var phoneNumber;
   var password;
@@ -34,18 +34,6 @@ class _SignUpState extends State<SignUp> {
      return encrypted!.base64;
   }
 
-
-
-  void findPhoneNumber() async {
-    bool empty=false;
-     await  db.collection("users")
-        .where("phone", isEqualTo: phoneNumber).get().then((value) =>{
-        empty= value.docs.isEmpty,
-     });
-         setState(() {
-           findPhone =empty;
-         });
-  }
 
   Future signup() async {
      String?passEncrypted;
@@ -75,7 +63,7 @@ class _SignUpState extends State<SignUp> {
           );
         }));
       },
-      timeout: const Duration(seconds: 10),
+      timeout: const Duration(seconds: 60),
       codeAutoRetrievalTimeout: (String verificationId) {},
     );
   }
@@ -96,20 +84,19 @@ class _SignUpState extends State<SignUp> {
 
   }
 
-  _send() {
+  _send()async {
     final isValid = _formKey.currentState!.validate();
     if (isValid) {
       _formKey.currentState!.save();
-      findPhoneNumber();
+      await  db.collection("users")
+          .where("phone", isEqualTo: phoneNumber).get().then((value) =>{
+      findPhone= value.docs.isEmpty,});
       if(findPhone==false){
         _showDialog();
       }else if(findPhone==true){
         signup();
       }
-    } else {
-      setState(() {
-        findPhone=true;
-      });
+
     }
   }
 
@@ -119,16 +106,18 @@ class _SignUpState extends State<SignUp> {
       child: Stack(children: [
         Container(
           decoration: BoxDecoration(
-            color: Color.fromARGB(252, 255, 251, 251),
+            color: kDefaultBackGroundSign_in_up,
           ),
         ),
         Scaffold(
+
             backgroundColor: Colors.transparent,
             body: SingleChildScrollView(
                 child: Column(
                     mainAxisSize: MainAxisSize.min,
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
+
                   Container(
                     margin: EdgeInsets.only(
                         right: 15, left: 15, top: 30, bottom: 15),
@@ -247,7 +236,7 @@ class _SignUpState extends State<SignUp> {
                               style: ElevatedButton.styleFrom(
                                 minimumSize: const Size(300, 50),
                                 maximumSize: const Size(300, 50),
-                                backgroundColor: Colors.black,
+                                backgroundColor: kDefaultColorButton,
 
                                 textStyle: TextStyle(
                                     fontSize: 20, fontWeight: FontWeight.bold),

@@ -13,7 +13,7 @@ class MainPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    return MaterialApp(initialRoute: '/', routes: kRoutes);
+    return MaterialApp(initialRoute: '/login', routes: kRoutes);
 
   }
 }
