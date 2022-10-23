@@ -1,32 +1,55 @@
+import 'package:chic_store/screen/singleProduct.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
+import '../constants/constants.dart';
 import '../model/productmdel.dart';
+import '../widgets/loadingWidget.dart';
+import '../widgets/productCard.dart';
 
 class AllProduct extends StatelessWidget {
-  AllProduct({ required this.catogery_id});
-  final String catogery_id ;
-  CollectionReference products = FirebaseFirestore.instance.collection("category").doc('XNnn3CTVTtB6lT9aGT4V').collection('product');
+  AllProduct({required this.catogeryId , required this.catogeryName});
+
+  String? catogeryId;
+  String? catogeryName;
+  final db = FirebaseFirestore.instance;
+  Stream<List<Product>> readDataProdect() =>
+      db.collection('product').where('category_id',isEqualTo: catogeryId )
+          .snapshots()
+          .map((value) =>
+          value.docs
+              .map((e) => Product.fromJson((e.data())))
+              .toList());
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder <QuerySnapshot>(
-        stream: products.snapshots() ,
+    return StreamBuilder <List<Product>>(
+        stream: readDataProdect(),
         builder: (context,snapshot){
+          if(snapshot.hasError){
+            return Text("${snapshot.error}");
+          }
+          if (snapshot.connectionState == ConnectionState) {
+            return  Loading();
+          }
           if(snapshot.hasData){
-            List<Product> product = [];
-            for(int i = 0;i<snapshot.data!.docs.length;i++){
-              print(snapshot.data!.docs[i]['image1_url']);
-              product.add(Product.fromJson(snapshot.data!.docs[i]));
-            }
+            final product = snapshot.data;
             return MaterialApp(
               home: Scaffold(
-                backgroundColor: Colors.white,
                 appBar: AppBar(
-                  title: Text("datdfa"),
+                  leading: IconButton(
+                    icon: Icon(Icons.arrow_back),
+                    iconSize: 20.0,
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                  ),
+                  title: Text('${catogeryName}'),
+                  backgroundColor: Colors.black,
                 ),
                 body: Padding(
-                  padding: const EdgeInsets.only(right: 16,left: 16,top: 50),
+                  padding: const EdgeInsets.only(right: 16,left: 16,top: 5),
                   child: GridView.builder(
-                      itemCount: product.length,
+                      itemCount: product!.length,
                       clipBehavior: Clip.none,
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 2,
@@ -41,7 +64,7 @@ class AllProduct extends StatelessWidget {
               ),
             );
           }else {
-            return  MaterialApp(home: Text("sdfasdf"));
+              return  Loading();
           }
         }
     );
