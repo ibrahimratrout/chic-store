@@ -29,10 +29,36 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return  Column(
-        children: [
-          Container(
-              child: Column(
+    return  Scaffold(
+      appBar: AppBar(
+        backgroundColor: kDefaultAppBarBackgroundColor,
+        title: Text(
+          "Chic Store",
+          textAlign: TextAlign.center,
+        ),
+        centerTitle: true,
+        titleTextStyle: TextStyle(color: kDefaultAppBarColorTitile),
+        leading: IconButton(
+          icon: Icon(
+            Icons.menu,
+            color: kDefaultAppBarIconColor,
+          ),
+          splashColor: Colors.black,
+          onPressed: () {},
+        ),
+        actions: [
+          IconButton(
+              onPressed: () {},
+              icon: Icon(
+                Icons.shopping_cart_outlined,
+                color: kDefaultAppBarIconColor,
+              ))
+        ],
+      ),
+      body: Column(
+            children: [
+              Container(
+                  child: Column(
                 children: [
                   SizedBox(
                     height: 20,
@@ -176,7 +202,7 @@ class _HomePageState extends State<HomePage> {
           SizedBox(  height: 10,
           )
         ]
-
+      ),
     );
   }
 }

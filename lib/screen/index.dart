@@ -24,31 +24,7 @@ class _homeNavigationBarState extends State<homeNavigationBar> {
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
-          appBar: AppBar(
-            backgroundColor: kDefaultAppBarBackgroundColor,
-            title: Text(
-              "Chic Store",
-              textAlign: TextAlign.center,
-            ),
-            centerTitle: true,
-            titleTextStyle: TextStyle(color: kDefaultAppBarColorTitile),
-            leading: IconButton(
-              icon: Icon(
-                Icons.menu,
-                color: kDefaultAppBarIconColor,
-              ),
-              splashColor: Colors.black,
-              onPressed: () {},
-            ),
-            actions: [
-              IconButton(
-                  onPressed: () {},
-                  icon: Icon(
-                    Icons.shopping_cart_outlined,
-                    color: kDefaultAppBarIconColor,
-                  ))
-            ],
-          ),
+
           drawer: Drawer(
             child: Column(children: [
               UserAccountsDrawerHeader(
