@@ -36,6 +36,20 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.0"
+  carousel_pro_nullsafety:
+    dependency: "direct main"
+    description:
+      name: carousel_pro_nullsafety
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.2"
+  carousel_slider:
+    dependency: "direct main"
+    description:
+      name: carousel_slider
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "4.1.1"
   characters:
     dependency: transitive
     description:
@@ -240,6 +254,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.0"
+  loading_animation_widget:
+    dependency: "direct main"
+    description:
+      name: loading_animation_widget
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.2.0+3"
   matcher:
     dependency: transitive
     description:
@@ -378,6 +399,13 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.99"
+  smooth_page_indicator:
+    dependency: "direct main"
+    description:
+      name: smooth_page_indicator
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.0+2"
   source_span:
     dependency: transitive
     description:
