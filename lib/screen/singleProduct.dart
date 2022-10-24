@@ -9,7 +9,7 @@ import '../constants/constants.dart';
 import '../widgets/loadingWidget.dart';
 
 class SingleProduct extends StatefulWidget {
-  SingleProduct({ this.productId});
+  SingleProduct({required this.productId});
   final String? productId;
 
   @override
@@ -17,12 +17,11 @@ class SingleProduct extends StatefulWidget {
 }
 
 class _SingleProductState extends State<SingleProduct> {
-  var productid;
 
   Stream<QuerySnapshot<Map<String, dynamic>>> getSingleProduct() {
     return  FirebaseFirestore.instance
         .collection("product")
-        .where("product_id", isEqualTo: productid)
+        .where("product_id", isEqualTo: widget.productId)
         .snapshots();
   }
   Widget buildIndicator()=>AnimatedSmoothIndicator(
@@ -37,7 +36,6 @@ class _SingleProductState extends State<SingleProduct> {
   var data;
   @override
   Widget build(BuildContext context) {
-    productid=ModalRoute.of(context)?.settings.arguments;
     return StreamBuilder<QuerySnapshot>(
         stream: getSingleProduct(),
         builder: (context, snapshot) {
