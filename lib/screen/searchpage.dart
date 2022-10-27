@@ -1,4 +1,5 @@
 import 'package:chic_store/constants/constants.dart';
+import 'package:chic_store/screen/singleProduct.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
@@ -83,8 +84,9 @@ class _SearchPageState extends State<SearchPage> {
                           if (_search != "") {
                             return ListTile(
                               onTap: () {
-                                print(data['product_id']);
-                                //go to page single product
+                                Navigator.push(context,
+                                    MaterialPageRoute(builder: (context)=> SingleProduct(productId: data['product_id'].toString())));
+
                               },
                               title: Text(
                                 data['product_name'],

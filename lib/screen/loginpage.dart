@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:chic_store/screen/index.dart';
 import 'package:encrypt/encrypt.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -31,17 +32,8 @@ class _LoginPageState extends State<LoginPage> {
   }
   _saveToken(String token) async {
     final prefs = await SharedPreferences.getInstance();
-    final key = 'access_token';
     final value = token;
-    prefs.setString(key, value);
-  }
-
-  Future<String?> readToken() async {
-    final prefs = await SharedPreferences.getInstance();
-    final key = 'access_token';
-    final value = prefs.get(key) ?? 0;
-    print('read : $value');
-    return value.toString();
+    prefs.setString(KEY_ACCESS_TOKEN, value);
   }
 
   void login() async {
@@ -55,7 +47,11 @@ class _LoginPageState extends State<LoginPage> {
       x = value.docs.isEmpty;
       value.docs.forEach((element) {
         _saveToken(element.data()['token']);
-        print(element.data()['token']);
+       if(element.data()['token']!=null)
+         {
+          Navigator.of(context).pushReplacement(
+              MaterialPageRoute(builder: (context) => homeNavigationBar()));
+         }
       });
       setState(() {
         isFailed = x;
