@@ -35,4 +35,8 @@ const kDefaultColorButton=Colors.black;
 const kDefaultBackGroundSign_in_up=Color.fromARGB(252, 255, 251, 251);
 
 
+const KEY_ACCESS_TOKEN = 'access_token';
+
+
+
 

@@ -4,6 +4,7 @@ import 'package:chic_store/screen/loginpage.dart';
 import 'package:chic_store/screen/profilepage.dart';
 import 'package:chic_store/screen/searchpage.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class homeNavigationBar extends StatefulWidget {
   const homeNavigationBar({Key? key}) : super(key: key);
@@ -18,6 +19,12 @@ class _homeNavigationBarState extends State<homeNavigationBar> {
     setState(() {
       _selectedScreenIndex = index;
     });
+  }
+  logout() async{
+    final prefs = await SharedPreferences.getInstance();
+    final removeAccessToken = await prefs.remove(KEY_ACCESS_TOKEN);
+    Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (context) => LoginPage()));
   }
 
   @override
@@ -64,7 +71,9 @@ class _homeNavigationBarState extends State<homeNavigationBar> {
               ListTile(
                 leading: Icon(Icons.logout),
                 title: Text("Logout"),
-                onTap: () {},
+                onTap: ()  {
+                  logout();
+                },
               ),
             ]),
           ),

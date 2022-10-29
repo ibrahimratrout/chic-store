@@ -48,6 +48,7 @@ dependencies:
   smooth_page_indicator: ^1.0.0+2
   carousel_pro_nullsafety: ^1.0.2
   loading_animation_widget: ^1.2.0+3
+  percent_indicator: ^4.2.2
 dev_dependencies:
   flutter_test:
     sdk: flutter
