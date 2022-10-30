@@ -20,63 +20,14 @@ class _homeNavigationBarState extends State<homeNavigationBar> {
       _selectedScreenIndex = index;
     });
   }
-  logout() async{
-    final prefs = await SharedPreferences.getInstance();
-    final removeAccessToken = await prefs.remove(KEY_ACCESS_TOKEN);
-    Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => LoginPage()));
-  }
+
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
 
-          drawer: Drawer(
-            child: Column(children: [
-              UserAccountsDrawerHeader(
-                decoration: BoxDecoration(
-                  color: Colors.deepPurple,
-                ),
-                accountName: Text("sessionUsername"),
-                accountEmail: Text("mail"),
-                currentAccountPicture:
-                CircleAvatar(backgroundColor: Colors.black, child: Text("--")),
-              ),
-              Divider(),
-              ListTile(
-                leading: Icon(
-                  Icons.home,
-                ),
-                title: Text("Home"),
-                onTap: () {},
-              ),
-              Divider(),
-              ListTile(
-                leading: Icon(
-                  Icons.help,
-                ),
-                title: Text("Help"),
-                onTap: () {},
-              ),
-              Divider(),
-              ListTile(
-                leading: Icon(
-                  Icons.help_center,
-                ),
-                title: Text("About"),
-                onTap: () {},
-              ),
-              Divider(),
-              ListTile(
-                leading: Icon(Icons.logout),
-                title: Text("Logout"),
-                onTap: ()  {
-                  logout();
-                },
-              ),
-            ]),
-          ),
+
           body: screen[_selectedScreenIndex],
           bottomNavigationBar: BottomNavigationBar(
             currentIndex: _selectedScreenIndex,
