@@ -1,20 +1,20 @@
 class Product {
-   String? product_name ;
-   String? product_id ;
-   String? product_description ;
-   int? price ;
-   List <dynamic>? image ;
-   List<dynamic>? color ;
-   String? catogery_id;
+  String? product_name ;
+  String? product_id ;
+  String? product_description ;
+  dynamic? price ;
+  List <dynamic>? image ;
+  List<dynamic>? color ;
+  String? catogery_id;
 
   Product(
       {  this.product_name,
-         this.product_id,
-         this.product_description,
-         this.price,
-         this.image,
-         this.color,
-         this.catogery_id
+        this.product_id,
+        this.product_description,
+        this.price,
+        this.image,
+        this.color,
+        this.catogery_id
       });
 
   factory Product.fromJson (jsonData){
