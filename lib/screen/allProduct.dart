@@ -38,16 +38,17 @@ class AllProduct extends StatelessWidget {
                 appBar: AppBar(
                   leading: IconButton(
                     icon: Icon(Icons.arrow_back),
+                    color: kDefaultAppBarColorTitile,
                     iconSize: 20.0,
                     onPressed: () {
                       Navigator.pop(context);
                     },
                   ),
-                  title: Text('${catogeryName}'),
-                  backgroundColor: Colors.black,
+                  title: Text('${catogeryName}',style: TextStyle(color: kDefaultAppBarColorTitile,fontSize: 25),),
+                  backgroundColor: kDefaultAppBarBackgroundColor,
                 ),
                 body: Padding(
-                  padding: const EdgeInsets.only(right: 16,left: 16,top: 5),
+                  padding: const EdgeInsets.only(right: 16,left: 16,top: 5,bottom: 16),
                   child: GridView.builder(
                       itemCount: product!.length,
                       clipBehavior: Clip.none,
@@ -64,7 +65,7 @@ class AllProduct extends StatelessWidget {
               ),
             );
           }else {
-              return  Loading();
+            return  Loading();
           }
         }
     );

@@ -16,7 +16,7 @@ class ProductCard extends StatelessWidget {
         clipBehavior: Clip.none,
         children: [
           Padding(
-            padding: const EdgeInsets.only(top: 100),
+            padding: const EdgeInsets.only(top: 85),
             child: Container(
               width:200,
               height: 200,
@@ -34,26 +34,27 @@ class ProductCard extends StatelessWidget {
               ),
               child: Padding(padding: EdgeInsets.symmetric(horizontal: 10),
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     Text(product.product_name!,
-                      style:TextStyle(fontSize:23 ,fontWeight: FontWeight.bold) ,
+                      style:TextStyle(fontSize:18 ,fontWeight: FontWeight.bold) ,
                     ),
-                    SizedBox(height: 10,),
-                    Row(children: [
-                      Text(product.price.toString()),
-                    ],)
+                    SizedBox(height: 10),
+                    Text("₪ ${product.price-1}.99",style: TextStyle(
+                        fontSize: 20,fontWeight: FontWeight.bold,color: Colors.red
+                    )),
+                    SizedBox(height: 5),
                   ],) ,
               ),
 
             ),
           ),
           Positioned(
-              right: 20,
-              bottom: 80,
+              right:  product.catogery_id == "2"? 30 :40,
+              bottom: product.catogery_id == "2"? 85 :106,
               child: Image.network('${product.image?[0]}',height: 100,width: 100,))
         ],
-
       ),
     );
   }
