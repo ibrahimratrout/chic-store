@@ -3,6 +3,7 @@ import 'package:chic_store/model/usermodel.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:pinput/pinput.dart';
 
 class verifyCode extends StatefulWidget {
@@ -22,6 +23,8 @@ class _verifyCodeState extends State<verifyCode> {
   var register;
 
   TextEditingController? phoneNumberController = TextEditingController();
+
+  bool isLoading =false;
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -77,6 +80,7 @@ class _verifyCodeState extends State<verifyCode> {
                       child: ElevatedButton(
                           onPressed: () async {
                             try {
+                              isLoading=true;
                               final credential = PhoneAuthProvider.credential(
                                   verificationId: widget.verification,
                                   smsCode: phoneNumberController!.text
@@ -181,6 +185,25 @@ class _verifyCodeState extends State<verifyCode> {
                                 color: Colors.white,
                                 fontSize: kDefaultSizeText,
                               ))),
+                    )
+                    ,
+                    Visibility(
+                      visible: isLoading,
+                      child: Center(
+                        child: SpinKitFadingCircle(
+
+                          itemBuilder: (BuildContext context, int index) {
+
+                            return DecoratedBox(
+                              decoration: BoxDecoration(
+                                color: index.isEven
+                                    ? Colors.black
+                                    : Colors.white,
+                              ),
+                            );
+                          },
+                        ),
+                      ),
                     )
                   ],
                 ),

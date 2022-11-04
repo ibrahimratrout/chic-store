@@ -35,6 +35,8 @@ class _SearchPageState extends State<SearchPage> {
                       setState(() {});
                     })
               ],
+              automaticallyImplyLeading: false,
+
               backgroundColor: Colors.black,
               title: Container(
                 margin: EdgeInsets.all(1),
