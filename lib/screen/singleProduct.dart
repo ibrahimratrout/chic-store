@@ -1,7 +1,9 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import '../constants/constants.dart';
 import '../widgets/loadingWidget.dart';
 
 class SingleProduct extends StatefulWidget {
@@ -21,8 +23,10 @@ class _SingleProductState extends State<SingleProduct> {
   var dataimages;
   var data;
   late int primaryColor ;
+  late int primaryColor1 ;
   var dataColor ;
   int indexB = 0 ;
+  int indexB1 = 0;
   late bool isVisible = false ;
   hexColor(String colorHex){
     String colornew = '0xFF'+colorHex ;
@@ -51,6 +55,7 @@ class _SingleProductState extends State<SingleProduct> {
             data = snapshot.data?.docs[0];
             dataColor = snapshot.data?.docs[0]['color'];
             primaryColor = hexColor(dataColor[indexB]);
+            primaryColor1 = hexColor(dataColor[indexB1]);
             if(snapshot.data?.docs[0]['category_id']=="1") {
               isVisible = true;
             }else{ isVisible = false;}
@@ -117,43 +122,36 @@ class _SingleProductState extends State<SingleProduct> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                    'Product Name',style: TextStyle(fontSize: 20,color: Colors.grey)
+                                    'Product Name',style: kDefaultStyleHeadTextSingleProduct
                                 ),
-                                const SizedBox(height: 15),
+                                kDefaultSpace15,
+                                Text('${data['product_name']}',
+                                    style: GoogleFonts.breeSerif(textStyle:kDefaultStyleTextSingleProduct),
+                                ),
+                                kDefaultSpace25,
                                 Text(
-                                    '${data['product_name']}',style: TextStyle(fontSize: 28)
+                                    'Product Price ',style: kDefaultStyleHeadTextSingleProduct
                                 ),
-                                const SizedBox(height: 25),
-                                Text(
-                                    'Product Price ',style: TextStyle(fontSize: 20,color: Colors.grey)
+                                kDefaultSpace15,
+                                Text('₪ ${data['price']-1}.99',style: GoogleFonts.breeSerif(textStyle:kDefaultStyleTextSingleProduct)
                                 ),
-                                const SizedBox(height: 15),
-                                Text(
-                                    '₪ ${data['price']-1}.99',style: TextStyle(fontSize: 30)
-                                ),
-                                const SizedBox(height: 25),
-                                Text("Description ",style: TextStyle(
-                                    fontSize: 20,
-                                    color: Colors.grey
-                                ),),
-                                const SizedBox(height: 15),
-                                Text('${data['product_description']}',style: TextStyle(fontSize: 25,color: Colors.black)),
-                                const SizedBox(height: 30),
+                                kDefaultSpace25,
                                 Visibility(
                                     visible: isVisible,
                                     child: Column(
                                       crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
-                                        Text("Color",style: TextStyle(
-                                            fontSize: 30,
-                                            color: Colors.black
-                                        ),),
+                                        Text("Color",style: kDefaultStyleHeadTextSingleProduct
+                                        ),
                                         buildColorIcons(),
-                                        const SizedBox(height: 50),
+                                        kDefaultSpace25,
                                       ],
                                     )
                                 ),
-                                const SizedBox(height: 50),
+                                Text("Description ",style: kDefaultStyleHeadTextSingleProduct),
+                                kDefaultSpace15,
+                                Text('${data['product_description']}',style: GoogleFonts.breeSerif(textStyle:kDefaultStyleTextSingleProduct)),
+                                const SizedBox(height: 60),
                               ],
                             ),
                           ),
@@ -172,7 +170,7 @@ class _SingleProductState extends State<SingleProduct> {
                                       onPressed: ()=>{},
                                       child: Text("BUY",style: TextStyle(fontSize: 20)),
                                       style: ElevatedButton.styleFrom(
-                                          backgroundColor: Colors.black,
+                                          backgroundColor: kDefaultColorButton,
                                           side: BorderSide(width:1.5, color:Colors.brown),
                                           //elevation of button
                                           shape: RoundedRectangleBorder(
@@ -208,7 +206,7 @@ class _SingleProductState extends State<SingleProduct> {
           child: Icon(
             Icons.check,
             size: 22,
-            color: primaryColor == myColor ? Color(myColor)  : Colors.transparent,
+            color: primaryColor1 == myColor ? Color(myColor)  : Colors.transparent,
           ),
         ),
         IconButton(
@@ -219,8 +217,8 @@ class _SingleProductState extends State<SingleProduct> {
           ),
           onPressed: () {
             setState(() {
-              indexB = il;
-              activeIndex=il;
+              indexB1 = il;
+              // activeIndex=il;
             });
           },
         ),

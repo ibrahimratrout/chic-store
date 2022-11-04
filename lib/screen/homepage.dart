@@ -4,6 +4,7 @@ import 'package:chic_store/model/categorymodel.dart';
 import 'package:chic_store/screen/allProduct.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../constants/constants.dart';
@@ -44,7 +45,7 @@ class _HomePageState extends State<HomePage> {
           textAlign: TextAlign.center,
         ),
         centerTitle: true,
-        titleTextStyle: TextStyle(color: kDefaultAppBarColorTitile),
+        titleTextStyle: GoogleFonts.breeSerif(textStyle: kDefaultStyleTextTitlte),
         leading: IconButton(
           icon: Icon(
             Icons.menu,
@@ -77,12 +78,7 @@ class _HomePageState extends State<HomePage> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            "Offers",
-                            style: TextStyle(
-                                color: kDefaultColoranAppText,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 20),
-                          ),
+                            "Offers", style: GoogleFonts.breeSerif(textStyle: kDefaultStyleTextHomePage)),
                         ],
                       ),
                     ),
@@ -117,10 +113,7 @@ class _HomePageState extends State<HomePage> {
                 children: [
                   Text(
                     "Category List",
-                    style: TextStyle(
-                        color: kDefaultColoranAppText,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20),
+                    style: GoogleFonts.breeSerif(textStyle: kDefaultStyleTextHomePage),
                   ),
                   Text(
                     "See All",
@@ -194,10 +187,7 @@ class _HomePageState extends State<HomePage> {
                                         ),
                                         Text(
                                           '${data.category_name}',
-                                          style: TextStyle(
-                                              color: kDefaultColoranAppText,
-                                              fontSize: kDefaultSizeText),
-                                        )
+                                          style: GoogleFonts.breeSerif(textStyle:kDefaultStyleTextCategory)),
                                       ],
                                     ),
                                   ),
