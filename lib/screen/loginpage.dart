@@ -40,7 +40,6 @@ class _LoginPageState extends State<LoginPage> {
 
   void login() async {
     bool x = false;
-    isLoading=true;
     db
         .collection("users")
         .where("phone", isEqualTo: phoneNumber)
@@ -52,7 +51,9 @@ class _LoginPageState extends State<LoginPage> {
         _saveToken(element.data()['token']);
        if(element.data()['token']!=null)
          {
-          Navigator.of(context).pushReplacement(
+           isLoading=true;
+
+           Navigator.of(context).pushReplacement(
               MaterialPageRoute(builder: (context) => homeNavigationBar()));
          }
       });
