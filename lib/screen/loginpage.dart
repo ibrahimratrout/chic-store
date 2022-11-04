@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:chic_store/screen/index.dart';
 import 'package:encrypt/encrypt.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:encrypt/encrypt.dart' as encrypt;
@@ -15,6 +16,7 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   bool isFailed = false;
+  bool isLoading =false;
   var password;
   var phoneNumber;
   var _formKey = GlobalKey<FormState>();
@@ -49,7 +51,9 @@ class _LoginPageState extends State<LoginPage> {
         _saveToken(element.data()['token']);
        if(element.data()['token']!=null)
          {
-          Navigator.of(context).pushReplacement(
+           isLoading=true;
+
+           Navigator.of(context).pushReplacement(
               MaterialPageRoute(builder: (context) => homeNavigationBar()));
          }
       });
@@ -118,6 +122,8 @@ class _LoginPageState extends State<LoginPage> {
                          child: Image(
 
                          image: AssetImage("images/logo.png"),
+                           width: 180,
+                           height: 120,
 
                         ),),
                     Container(
@@ -233,6 +239,24 @@ class _LoginPageState extends State<LoginPage> {
                                       style: TextStyle(color: kTextColor),
                                     ),
                                   )),
+                              Visibility(
+                                visible: isLoading,
+                                child: Center(
+                                  child: SpinKitFadingCircle(
+
+                                    itemBuilder: (BuildContext context, int index) {
+
+                                      return DecoratedBox(
+                                        decoration: BoxDecoration(
+                                          color: index.isEven
+                                              ? Colors.black
+                                              : Colors.white,
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                ),
+                              )
                             ],
                           ),
                         ))

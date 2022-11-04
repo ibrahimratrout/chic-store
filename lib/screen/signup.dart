@@ -7,8 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../model/usermodel.dart';
 import 'package:encrypt/encrypt.dart' as encrypt;
-
-
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class SignUp extends StatefulWidget {
   @override
@@ -16,7 +15,8 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
-  bool? findPhone ;
+  bool? findPhone;
+  bool isLoading=false;
   var name;
   var phoneNumber;
   var password;
@@ -26,20 +26,19 @@ class _SignUpState extends State<SignUp> {
   final db = FirebaseFirestore.instance;
   static Encrypted? encrypted;
 
-   String encryptAES(plainText){
-     final key = encrypt.Key.fromUtf8('my32lengthsupersecretnooneknows1');
-     final iv = IV.fromLength(16);
-     final encrypter = Encrypter(AES(key));
-     encrypted = encrypter.encrypt(plainText, iv: iv);
-     return encrypted!.base64;
+  String encryptAES(plainText) {
+    final key = encrypt.Key.fromUtf8('my32lengthsupersecretnooneknows1');
+    final iv = IV.fromLength(16);
+    final encrypter = Encrypter(AES(key));
+    encrypted = encrypter.encrypt(plainText, iv: iv);
+    return encrypted!.base64;
   }
 
-
   Future signup() async {
-     String?passEncrypted;
-     setState(() {
-       passEncrypted=encryptAES(password);
-     });
+    String? passEncrypted;
+    setState(() {
+      passEncrypted = encryptAES(password);
+    });
 
     final user = RegisterModel(
       name: name,
@@ -67,36 +66,52 @@ class _SignUpState extends State<SignUp> {
       codeAutoRetrievalTimeout: (String verificationId) {},
     );
   }
-  void _showDialog()
-  {
-    showDialog(context: context,   builder: (BuildContext context) {
-      return AlertDialog(
-          title: Text("Registration Error",textAlign: TextAlign.center,),titleTextStyle:TextStyle(color: Colors.black) ,
-          content :Text("The entered number is already registered",textAlign: TextAlign.center,style: TextStyle(color: Colors.black),)
-          ,actions: [
-            TextButton(onPressed:(){Navigator.of(context).pop();},
-                child: Text("Chanel"))
-          ],
 
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(5),
-          ));});
-
+  void _showDialog() {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+              title: Text(
+                "Registration Error",
+                textAlign: TextAlign.center,
+              ),
+              titleTextStyle: TextStyle(color: Colors.black),
+              content: Text(
+                "The entered number is already registered",
+                textAlign: TextAlign.center,
+                style: TextStyle(color: Colors.black),
+              ),
+              actions: [
+                TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: Text("Chanel"))
+              ],
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(5),
+              ));
+        });
   }
 
-  _send()async {
+  _send() async {
     final isValid = _formKey.currentState!.validate();
     if (isValid) {
       _formKey.currentState!.save();
-      await  db.collection("users")
-          .where("phone", isEqualTo: phoneNumber).get().then((value) =>{
-      findPhone= value.docs.isEmpty,});
-      if(findPhone==false){
+      await db
+          .collection("users")
+          .where("phone", isEqualTo: phoneNumber)
+          .get()
+          .then((value) => {
+                findPhone = value.docs.isEmpty,
+              });
+      if (findPhone == false) {
         _showDialog();
-      }else if(findPhone==true){
+      } else if (findPhone == true) {
+        isLoading=true;
         signup();
       }
-
     }
   }
 
@@ -110,14 +125,12 @@ class _SignUpState extends State<SignUp> {
           ),
         ),
         Scaffold(
-
             backgroundColor: Colors.transparent,
             body: SingleChildScrollView(
                 child: Column(
                     mainAxisSize: MainAxisSize.min,
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-
                   Container(
                     margin: EdgeInsets.only(
                         right: 15, left: 15, top: 30, bottom: 15),
@@ -154,7 +167,8 @@ class _SignUpState extends State<SignUp> {
                               validator: (text) {
                                 if (text!.length < 3) {
                                   return "The name can not be less than three letters";
-                                } else if (!RegExp(r"^[a-z A-Z]+").hasMatch(text)) {
+                                } else if (!RegExp(r"^[a-z A-Z]+")
+                                    .hasMatch(text)) {
                                   return "The name can not contain numbers ";
                                 } else {
                                   return null;
@@ -174,9 +188,9 @@ class _SignUpState extends State<SignUp> {
                               validator: (text) {
                                 if (text!.length < 10) {
                                   return "The number cannot be less than 10 digits";
-                                } else if(text!.length>10){
+                                } else if (text!.length > 10) {
                                   return "The number cannot be more than 10 digits";
-                                }else if (!RegExp(r"^[0-9]+").hasMatch(text)){
+                                } else if (!RegExp(r"^[0-9]+").hasMatch(text)) {
                                   return "The number cannot contain letters or symbols";
                                 } else {
                                   return null;
@@ -198,7 +212,7 @@ class _SignUpState extends State<SignUp> {
                               validator: (text) {
                                 if (text!.length < 6) {
                                   return "The password cannot be less than six characters";
-                                }  else {
+                                } else {
                                   return null;
                                 }
                               },
@@ -216,7 +230,7 @@ class _SignUpState extends State<SignUp> {
                               validator: (text) {
                                 if (text!.length < 4) {
                                   return "The address can not be less than 4 characters";
-                                } else  {
+                                } else {
                                   return null;
                                 }
                               },
@@ -230,7 +244,7 @@ class _SignUpState extends State<SignUp> {
                                 top: 14, right: 14, left: 14, bottom: 0),
                             child: ElevatedButton(
                               onPressed: () {
-                                  _send();
+                                _send();
                               },
                               child: Text("SIGN UP"),
                               style: ElevatedButton.styleFrom(
@@ -270,7 +284,26 @@ class _SignUpState extends State<SignUp> {
                                       style: TextStyle(color: Colors.black),
                                     ),
                                   )),
+
                             ],
+                          ),
+                          Visibility(
+                            visible: isLoading,
+                            child: Center(
+                              child: SpinKitFadingCircle(
+
+                                itemBuilder: (BuildContext context, int index) {
+
+                                  return DecoratedBox(
+                                    decoration: BoxDecoration(
+                                      color: index.isEven
+                                          ? Colors.black
+                                          : Colors.white,
+                                    ),
+                                  );
+                                },
+                              ),
+                            ),
                           )
                         ],
                       ),
