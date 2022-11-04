@@ -1,5 +1,6 @@
 import 'package:chic_store/screen/singleProduct.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import '../model/productmdel.dart';
 
 class ProductCard extends StatelessWidget {
@@ -25,10 +26,10 @@ class ProductCard extends StatelessWidget {
                   borderRadius:  BorderRadius.circular(15),
                   boxShadow: [
                     BoxShadow(
-                        color: Colors.grey.withOpacity(0.5),
-                        spreadRadius: 3,
-                        blurRadius: 10,
-                        offset: Offset(0, 3)
+                        color: Colors.grey.withOpacity(0.2),
+                        spreadRadius: 1,
+                        blurRadius: 5,
+                        offset: Offset(0, 1)
                     )
                   ]
               ),
@@ -38,21 +39,21 @@ class ProductCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     Text(product.product_name!,
-                      style:TextStyle(fontSize:18 ,fontWeight: FontWeight.bold) ,
+                      style:GoogleFonts.breeSerif(textStyle: TextStyle(fontSize:18 ,fontWeight: FontWeight.bold) ),
                     ),
-                    SizedBox(height: 10),
-                    Text("₪ ${product.price-1}.99",style: TextStyle(
-                        fontSize: 20,fontWeight: FontWeight.bold,color: Colors.red
-                    )),
-                    SizedBox(height: 5),
+                    const SizedBox(height: 10),
+                    Text("₪ ${product.price-1}.99",style: GoogleFonts.breeSerif(textStyle: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,color: Colors.black45)),
+                    ),
+                    const SizedBox(height: 5),
                   ],) ,
               ),
 
             ),
           ),
           Positioned(
-              right:  product.catogery_id == "2"? 30 :40,
-              bottom: product.catogery_id == "2"? 85 :106,
+              right:
+              product.catogery_id == "2"? 30 :40,
+              bottom: product.catogery_id == "2"? 85 :110,
               child: Image.network('${product.image?[0]}',height: 100,width: 100,))
         ],
       ),

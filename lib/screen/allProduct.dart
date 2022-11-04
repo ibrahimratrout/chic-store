@@ -1,6 +1,7 @@
 import 'package:chic_store/screen/singleProduct.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import '../constants/constants.dart';
 import '../model/productmdel.dart';
@@ -44,7 +45,7 @@ class AllProduct extends StatelessWidget {
                       Navigator.pop(context);
                     },
                   ),
-                  title: Text('${catogeryName}',style: TextStyle(color: kDefaultAppBarColorTitile,fontSize: 25),),
+                  title: Text('${catogeryName}',style:GoogleFonts.breeSerif(textStyle: kDefaultStyleTextTitlte)),
                   backgroundColor: kDefaultAppBarBackgroundColor,
                 ),
                 body: Padding(
