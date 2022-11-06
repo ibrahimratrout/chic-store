@@ -49,15 +49,23 @@ class _SignUpState extends State<SignUp> {
 
     FirebaseAuth.instance.verifyPhoneNumber(
       phoneNumber: phoneNumber,
-      verificationCompleted: (PhoneAuthCredential credential) async {
+      verificationCompleted: (PhoneAuthCredential credential)  {
       },
       verificationFailed: (FirebaseAuthException e) {
+        setState(() {
+          isLoading=false;
+
+        });
+        print(e.message);
         if (e.code == 'invalid-phone-number') {
           print('The provided phone number is not valid.');
         }
       },
       codeSent: (String verificationId, int? resendToken) async {
+        setState(() {
+          isLoading=false;
 
+        });
         await Navigator.push(context,
             MaterialPageRoute(builder: (BuildContext context) {
           return verifyCode(
