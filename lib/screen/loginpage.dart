@@ -103,166 +103,169 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Stack(children: [
-        Container(
-          decoration: BoxDecoration(
-              color: kDefaultBackGroundSign_in_up,
+    return WillPopScope(
+      onWillPop: ()async =>false,
+      child: SafeArea(
+        child: Stack(children: [
+          Container(
+            decoration: BoxDecoration(
+                color: kDefaultBackGroundSign_in_up,
+            ),
           ),
-        ),
-        Scaffold(
-            backgroundColor: Colors.transparent,
-            body: Center(
-              child: SingleChildScrollView(
-                  child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Container(
-                         child: Image(
+          Scaffold(
+              backgroundColor: Colors.transparent,
+              body: Center(
+                child: SingleChildScrollView(
+                    child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Container(
+                           child: Image(
 
-                         image: AssetImage("images/logo.png"),
-                           width: 180,
-                           height: 120,
+                           image: AssetImage("images/logo.png"),
+                             width: 180,
+                             height: 120,
 
-                        ),),
-                    Container(
-                      margin: EdgeInsets.only(
-                          right: 15, left: 15, top: 30, bottom: 15),
-                      child: Center(
-                        child: Text(
-                          "WELCOME ",
-                          style: TextStyle(
-                              color: kTextColor,
-                              fontSize: 40,
-                              fontWeight: FontWeight.bold),
+                          ),),
+                      Container(
+                        margin: EdgeInsets.only(
+                            right: 15, left: 15, top: 30, bottom: 15),
+                        child: Center(
+                          child: Text(
+                            "WELCOME ",
+                            style: TextStyle(
+                                color: kTextColor,
+                                fontSize: 40,
+                                fontWeight: FontWeight.bold),
+                          ),
                         ),
                       ),
-                    ),
-                    Container(
-                        margin: EdgeInsets.all(16),
-                        padding: EdgeInsets.all(4),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(4),
-                        ),
-                        child: Form(
-                          key: _formKey,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Container(
-                                margin: EdgeInsets.all(kDefaultTextFieldMargin),
-                                padding: EdgeInsets.all(kDefaultCategoryPaddin),
-                                child: TextFormField(
-                                  decoration:
-                                      InputDecoration(labelText: "Phone"),
-                                  keyboardType: TextInputType.phone,
-                                  validator: (text) {
-                                    if (text!.length < 10) {
-                                      return "The number cannot be less than 10 digits";
-                                    } else if (text!.length > 10) {
-                                      return "The number cannot be more than 10 digits";
-                                    } else if (!RegExp(r"^[0-9]+")
-                                        .hasMatch(text)) {
-                                      return "The number cannot contain letters or symbols";
-                                    } else {
-                                      return null;
-                                    }
-                                  },
-                                  onSaved: (value) {
-                                    phoneNumber = "+972${value}";
-                                    print(phoneNumber);
-                                  },
-                                ),
-                              ),
-                              Container(
-                                margin: EdgeInsets.all(kDefaultTextFieldMargin),
-                                padding: EdgeInsets.all(kDefaultCategoryPaddin),
-                                child: TextFormField(
-                                  decoration:
-                                      InputDecoration(labelText: "Password"),
-                                  keyboardType: TextInputType.visiblePassword,
-                                  obscureText: true,
-                                  validator: (text) {
-                                    if (text!.length < 6) {
-                                      return "The password cannot be less than six characters";
-                                    } else {
-                                      return null;
-                                    }
-                                  },
-                                  onSaved: (value) {
-                                    password = value;
-                                  },
-                                ),
-                              ),
-                              Container(
-                                margin: EdgeInsets.only(
-                                    top: 14, right: 14, left: 14, bottom: 0),
-                                child: ElevatedButton(
-                                  onPressed: () {
-                                    _send();
-                                    //Navigator.pushNamed(context, '/');
-                                  },
-                                  child: Text("SIGN IN"),
-                                  style: ElevatedButton.styleFrom(
-                                    minimumSize: const Size(300, 50),
-                                    maximumSize: const Size(300, 50),
-                                    backgroundColor: kDefaultColorButton,
-                                    textStyle: TextStyle(
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.bold),
-                                    shadowColor: Colors.white,
-                                    elevation: 5,
-                                    side: BorderSide(
-                                        color: Colors
-                                            .black87, //change border color
-                                        width: 2, //change border width
-                                        style: BorderStyle
-                                            .solid), // change border side of this beautiful button
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(
-                                          10), //change border radius of this beautiful button thanks to BorderRadius.circular function
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              Container(
-                                  margin: EdgeInsets.only(bottom: 15, top: 15),
-                                  child: TextButton(
-                                    onPressed: () {
-                                      Navigator.pushNamed(context, '/signup');
-                                    },
-                                    child: Text(
-                                      "Create New Accent",
-                                      style: TextStyle(color: kTextColor),
-                                    ),
-                                  )),
-                              Visibility(
-                                visible: isLoading,
-                                child: Center(
-                                  child: SpinKitFadingCircle(
-
-                                    itemBuilder: (BuildContext context, int index) {
-
-                                      return DecoratedBox(
-                                        decoration: BoxDecoration(
-                                          color: index.isEven
-                                              ? Colors.black
-                                              : Colors.white,
-                                        ),
-                                      );
-                                    },
-                                  ),
-                                ),
-                              )
-                            ],
+                      Container(
+                          margin: EdgeInsets.all(16),
+                          padding: EdgeInsets.all(4),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(4),
                           ),
-                        ))
-                  ])),
-            ))
-      ]),
+                          child: Form(
+                            key: _formKey,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Container(
+                                  margin: EdgeInsets.all(kDefaultTextFieldMargin),
+                                  padding: EdgeInsets.all(kDefaultCategoryPaddin),
+                                  child: TextFormField(
+                                    decoration:
+                                        InputDecoration(labelText: "Phone"),
+                                    keyboardType: TextInputType.phone,
+                                    validator: (text) {
+                                      if (text!.length < 10) {
+                                        return "The number cannot be less than 10 digits";
+                                      } else if (text!.length > 10) {
+                                        return "The number cannot be more than 10 digits";
+                                      } else if (!RegExp(r"^[0-9]+")
+                                          .hasMatch(text)) {
+                                        return "The number cannot contain letters or symbols";
+                                      } else {
+                                        return null;
+                                      }
+                                    },
+                                    onSaved: (value) {
+                                      phoneNumber = "+970${value}";
+                                      print(phoneNumber);
+                                    },
+                                  ),
+                                ),
+                                Container(
+                                  margin: EdgeInsets.all(kDefaultTextFieldMargin),
+                                  padding: EdgeInsets.all(kDefaultCategoryPaddin),
+                                  child: TextFormField(
+                                    decoration:
+                                        InputDecoration(labelText: "Password"),
+                                    keyboardType: TextInputType.visiblePassword,
+                                    obscureText: true,
+                                    validator: (text) {
+                                      if (text!.length < 6) {
+                                        return "The password cannot be less than six characters";
+                                      } else {
+                                        return null;
+                                      }
+                                    },
+                                    onSaved: (value) {
+                                      password = value;
+                                    },
+                                  ),
+                                ),
+                                Container(
+                                  margin: EdgeInsets.only(
+                                      top: 14, right: 14, left: 14, bottom: 0),
+                                  child: ElevatedButton(
+                                    onPressed: () {
+                                      _send();
+                                      //Navigator.pushNamed(context, '/');
+                                    },
+                                    child: Text("SIGN IN"),
+                                    style: ElevatedButton.styleFrom(
+                                      minimumSize: const Size(300, 50),
+                                      maximumSize: const Size(300, 50),
+                                      backgroundColor: kDefaultColorButton,
+                                      textStyle: TextStyle(
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.bold),
+                                      shadowColor: Colors.white,
+                                      elevation: 5,
+                                      side: BorderSide(
+                                          color: Colors
+                                              .black87, //change border color
+                                          width: 2, //change border width
+                                          style: BorderStyle
+                                              .solid), // change border side of this beautiful button
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(
+                                            10), //change border radius of this beautiful button thanks to BorderRadius.circular function
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Container(
+                                    margin: EdgeInsets.only(bottom: 15, top: 15),
+                                    child: TextButton(
+                                      onPressed: () {
+                                        Navigator.pushNamed(context, '/signup');
+                                      },
+                                      child: Text(
+                                        "Create New Accent",
+                                        style: TextStyle(color: kTextColor),
+                                      ),
+                                    )),
+                                Visibility(
+                                  visible: isLoading,
+                                  child: Center(
+                                    child: SpinKitFadingCircle(
+
+                                      itemBuilder: (BuildContext context, int index) {
+
+                                        return DecoratedBox(
+                                          decoration: BoxDecoration(
+                                            color: index.isEven
+                                                ? Colors.black
+                                                : Colors.white,
+                                          ),
+                                        );
+                                      },
+                                    ),
+                                  ),
+                                )
+                              ],
+                            ),
+                          ))
+                    ])),
+              ))
+        ]),
+      ),
     );
   }
 }

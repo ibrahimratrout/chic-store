@@ -209,7 +209,7 @@ class _SignUpState extends State<SignUp> {
                                 }
                               },
                               onSaved: (value) {
-                                phoneNumber = "+972${value}";
+                                phoneNumber = "+970${value}";
                               },
                             ),
                           ),
