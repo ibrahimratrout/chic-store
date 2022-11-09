@@ -16,7 +16,7 @@ class SignUp extends StatefulWidget {
 
 class _SignUpState extends State<SignUp> {
   bool? findPhone;
-  bool isLoading=false;
+  bool isLoading = false;
   var name;
   var phoneNumber;
   var password;
@@ -49,11 +49,23 @@ class _SignUpState extends State<SignUp> {
 
     FirebaseAuth.instance.verifyPhoneNumber(
       phoneNumber: phoneNumber,
-      verificationCompleted: (_) {},
+      verificationCompleted: (PhoneAuthCredential credential)  {
+      },
       verificationFailed: (FirebaseAuthException e) {
+        setState(() {
+          isLoading=false;
+
+        });
         print(e.message);
+        if (e.code == 'invalid-phone-number') {
+          print('The provided phone number is not valid.');
+        }
       },
       codeSent: (String verificationId, int? resendToken) async {
+        setState(() {
+          isLoading=false;
+
+        });
         await Navigator.push(context,
             MaterialPageRoute(builder: (BuildContext context) {
           return verifyCode(
@@ -109,7 +121,7 @@ class _SignUpState extends State<SignUp> {
       if (findPhone == false) {
         _showDialog();
       } else if (findPhone == true) {
-        isLoading=true;
+        isLoading = true;
         signup();
       }
     }
@@ -197,7 +209,7 @@ class _SignUpState extends State<SignUp> {
                                 }
                               },
                               onSaved: (value) {
-                                phoneNumber = "+972${value}";
+                                phoneNumber = "+970${value}";
                               },
                             ),
                           ),
@@ -284,16 +296,13 @@ class _SignUpState extends State<SignUp> {
                                       style: TextStyle(color: Colors.black),
                                     ),
                                   )),
-
                             ],
                           ),
                           Visibility(
                             visible: isLoading,
                             child: Center(
                               child: SpinKitFadingCircle(
-
                                 itemBuilder: (BuildContext context, int index) {
-
                                   return DecoratedBox(
                                     decoration: BoxDecoration(
                                       color: index.isEven

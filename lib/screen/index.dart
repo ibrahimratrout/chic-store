@@ -13,7 +13,7 @@ class homeNavigationBar extends StatefulWidget {
 }
 
 class _homeNavigationBarState extends State<homeNavigationBar> {
-  final screen = [HomePage(), SearchPage(),Profile()];
+  final screen = [HomePage(), SearchPage(), Profile()];
   int _selectedScreenIndex = 0;
   void _selectScreen(int index) {
     setState(() {
@@ -21,35 +21,35 @@ class _homeNavigationBarState extends State<homeNavigationBar> {
     });
   }
 
-
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-        child: Scaffold(
-
-
-          body: screen[_selectedScreenIndex],
-          bottomNavigationBar: BottomNavigationBar(
-            currentIndex: _selectedScreenIndex,
-            unselectedItemColor: kDefaultNavigationBarIconColor,
-            selectedItemColor: kDefaultNavigationBarIconColorselected,
-            onTap: _selectScreen,
-            backgroundColor: Colors.white,
-            items: const <BottomNavigationBarItem>[
-              BottomNavigationBarItem(
-                icon: Icon(Icons.home),
-                label: 'Home',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.search),
-                label: 'Search',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.person),
-                label: 'Profile',
-              ),
-            ],
-          ),
-        ));
+    return WillPopScope(
+      onWillPop: () async => false,
+      child: SafeArea(
+          child: Scaffold(
+        body: screen[_selectedScreenIndex],
+        bottomNavigationBar: BottomNavigationBar(
+          currentIndex: _selectedScreenIndex,
+          unselectedItemColor: kDefaultNavigationBarIconColor,
+          selectedItemColor: kDefaultNavigationBarIconColorselected,
+          onTap: _selectScreen,
+          backgroundColor: Colors.white,
+          items: const <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home),
+              label: 'Home',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.search),
+              label: 'Search',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.person),
+              label: 'Profile',
+            ),
+          ],
+        ),
+      )),
+    );
   }
 }

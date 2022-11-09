@@ -100,6 +100,7 @@ class _SearchPageState extends State<SearchPage> {
                                     fontWeight: FontWeight.bold),
                               ),
                               leading: CircleAvatar(
+                                backgroundColor: Colors.white,
                                 backgroundImage:
                                     NetworkImage(data['image_url'][0]),
                               ),
