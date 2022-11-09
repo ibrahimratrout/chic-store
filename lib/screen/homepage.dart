@@ -45,7 +45,7 @@ class _HomePageState extends State<HomePage> {
           textAlign: TextAlign.center,
         ),
         centerTitle: true,
-        titleTextStyle: GoogleFonts.breeSerif(textStyle: kDefaultStyleTextTitlte),
+        titleTextStyle:kDefaultStyleTextTitlte,
         leading: IconButton(
           icon: Icon(
             Icons.menu,
@@ -78,7 +78,7 @@ class _HomePageState extends State<HomePage> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            "Offers", style: GoogleFonts.breeSerif(textStyle: kDefaultStyleTextHomePage)),
+                            "Offers", style: kDefaultStyleTextHomePage),
                         ],
                       ),
                     ),
@@ -103,9 +103,7 @@ class _HomePageState extends State<HomePage> {
                     )
                   ],
                 )),
-            SizedBox(
-              height: 25,
-            ),
+                kDefaultSpace25,
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 25.0),
               child: Row(
@@ -113,7 +111,7 @@ class _HomePageState extends State<HomePage> {
                 children: [
                   Text(
                     "Category List",
-                    style: GoogleFonts.breeSerif(textStyle: kDefaultStyleTextHomePage),
+                    style: kDefaultStyleTextHomePage,
                   ),
                   Text(
                     "See All",
@@ -187,7 +185,7 @@ class _HomePageState extends State<HomePage> {
                                         ),
                                         Text(
                                           '${data.category_name}',
-                                          style: GoogleFonts.breeSerif(textStyle:kDefaultStyleTextCategory)),
+                                          style: kDefaultStyleTextCategory),
                                       ],
                                     ),
                                   ),

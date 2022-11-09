@@ -1,7 +1,6 @@
 import 'package:chic_store/screen/singleProduct.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import '../constants/constants.dart';
 import '../model/productmdel.dart';
@@ -36,6 +35,7 @@ class AllProduct extends StatelessWidget {
             final product = snapshot.data;
             return MaterialApp(
               home: Scaffold(
+                backgroundColor: Colors.white,
                 appBar: AppBar(
                   leading: IconButton(
                     icon: Icon(Icons.arrow_back),
@@ -45,16 +45,17 @@ class AllProduct extends StatelessWidget {
                       Navigator.pop(context);
                     },
                   ),
-                  title: Text('${catogeryName}',style:GoogleFonts.breeSerif(textStyle: kDefaultStyleTextTitlte)),
+                  title: Text('${catogeryName}',style: kDefaultStyleTextTitlte),
                   backgroundColor: kDefaultAppBarBackgroundColor,
                 ),
                 body: Padding(
-                  padding: const EdgeInsets.only(right: 16,left: 16,top: 5,bottom: 16),
+                  padding: const EdgeInsets.all(16),
                   child: GridView.builder(
                       itemCount: product!.length,
                       clipBehavior: Clip.none,
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 2,
+                          mainAxisSpacing: 10,
                           crossAxisSpacing: 10,
                           childAspectRatio: 0.8
                       ),

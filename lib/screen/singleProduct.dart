@@ -1,7 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import '../constants/constants.dart';
 import '../widgets/loadingWidget.dart';
@@ -23,10 +22,10 @@ class _SingleProductState extends State<SingleProduct> {
   var dataimages;
   var data;
   late int primaryColor ;
-  late int primaryColor1 ;
+  late int primaryColorS ;
   var dataColor ;
   int indexB = 0 ;
-  int indexB1 = 0;
+  int indexS = 0 ;
   late bool isVisible = false ;
   hexColor(String colorHex){
     String colornew = '0xFF'+colorHex ;
@@ -55,7 +54,7 @@ class _SingleProductState extends State<SingleProduct> {
             data = snapshot.data?.docs[0];
             dataColor = snapshot.data?.docs[0]['color'];
             primaryColor = hexColor(dataColor[indexB]);
-            primaryColor1 = hexColor(dataColor[indexB1]);
+            primaryColorS = hexColor(dataColor[indexS]);
             if(snapshot.data?.docs[0]['category_id']=="1") {
               isVisible = true;
             }else{ isVisible = false;}
@@ -83,6 +82,7 @@ class _SingleProductState extends State<SingleProduct> {
                           options: CarouselOptions(
                             height: 360,
                             viewportFraction: 1,
+                            enableInfiniteScroll: false,
                             onPageChanged: (index,reason)=>
                                 setState(() {
                                   activeIndex = index;
@@ -126,14 +126,15 @@ class _SingleProductState extends State<SingleProduct> {
                                 ),
                                 kDefaultSpace15,
                                 Text('${data['product_name']}',
-                                    style: GoogleFonts.breeSerif(textStyle:kDefaultStyleTextSingleProduct),
+                                  style: kDefaultStyleTextSingleProduct,
                                 ),
                                 kDefaultSpace25,
                                 Text(
                                     'Product Price ',style: kDefaultStyleHeadTextSingleProduct
                                 ),
+
                                 kDefaultSpace15,
-                                Text('₪ ${data['price']-1}.99',style: GoogleFonts.breeSerif(textStyle:kDefaultStyleTextSingleProduct)
+                                Text('₪ ${data['price']-1}.99',style: kDefaultStyleTextSingleProduct
                                 ),
                                 kDefaultSpace25,
                                 Visibility(
@@ -141,8 +142,8 @@ class _SingleProductState extends State<SingleProduct> {
                                     child: Column(
                                       crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
-                                        Text("Color",style: kDefaultStyleHeadTextSingleProduct
-                                        ),
+                                        Text("Color",style: kDefaultStyleHeadTextSingleProduct),
+                                        kDefaultSpace15,
                                         buildColorIcons(),
                                         kDefaultSpace25,
                                       ],
@@ -150,7 +151,7 @@ class _SingleProductState extends State<SingleProduct> {
                                 ),
                                 Text("Description ",style: kDefaultStyleHeadTextSingleProduct),
                                 kDefaultSpace15,
-                                Text('${data['product_description']}',style: GoogleFonts.breeSerif(textStyle:kDefaultStyleTextSingleProduct)),
+                                Text('${data['product_description']}',style: kDefaultStyleTextSingleProduct),
                                 const SizedBox(height: 60),
                               ],
                             ),
@@ -170,7 +171,7 @@ class _SingleProductState extends State<SingleProduct> {
                                       onPressed: ()=>{},
                                       child: Text("BUY",style: TextStyle(fontSize: 20)),
                                       style: ElevatedButton.styleFrom(
-                                          backgroundColor: kDefaultColorButton,
+                                          backgroundColor: Colors.black,
                                           side: BorderSide(width:1.5, color:Colors.brown),
                                           //elevation of button
                                           shape: RoundedRectangleBorder(
@@ -206,7 +207,7 @@ class _SingleProductState extends State<SingleProduct> {
           child: Icon(
             Icons.check,
             size: 22,
-            color: primaryColor1 == myColor ? Color(myColor)  : Colors.transparent,
+            color: primaryColorS == myColor ? Color(myColor)  : Colors.transparent,
           ),
         ),
         IconButton(
@@ -217,8 +218,7 @@ class _SingleProductState extends State<SingleProduct> {
           ),
           onPressed: () {
             setState(() {
-              indexB1 = il;
-              // activeIndex=il;
+              indexS = il;
             });
           },
         ),
