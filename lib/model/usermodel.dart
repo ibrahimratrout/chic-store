@@ -2,17 +2,19 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class RegisterModel {
   String? name;
-  String? phone;
+  String? username;
   String? password;
   String? address;
   String ? token;
 
+
   RegisterModel({
     this.name,
-    this.phone,
+    this.username,
     this.password,
     this.address,
-    this.token
+    this.token,
+
   });
 
   factory RegisterModel.fromFirestore(
@@ -22,17 +24,18 @@ class RegisterModel {
     final data = snapshot.data();
     return RegisterModel(
       name: data?['name'],
-      phone: data?['phone'],
+      username: data?['username'],
       password: data?['password'],
       address: data?['address'],
-      token:data?['token']
+      token:data?['token'],
+
     );
   }
 
   Map<String, dynamic> toFirestore() {
     return {
       if (name != null) "name": name,
-      if (phone != null) "phone": phone,
+      if (username != null) "username": username,
       if (password != null) "password": password,
       if (address != null) "address": address,
       if (token != null) "token": token,
