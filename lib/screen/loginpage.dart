@@ -18,7 +18,7 @@ class _LoginPageState extends State<LoginPage> {
   bool isFailed = false;
   bool isLoading =false;
   var password;
-  var phoneNumber;
+  var username;
   var _formKey = GlobalKey<FormState>();
   String?passDecrypt;
   static var decrypted;
@@ -42,7 +42,7 @@ class _LoginPageState extends State<LoginPage> {
     bool x = false;
     db
         .collection("users")
-        .where("phone", isEqualTo: phoneNumber)
+        .where("username", isEqualTo: username)
         .where("password", isEqualTo: passDecrypt)
         .get()
         .then((value) {
@@ -73,7 +73,7 @@ class _LoginPageState extends State<LoginPage> {
           return AlertDialog(
               title: Text("Login Error ",textAlign: TextAlign.center,),titleTextStyle:TextStyle(color: kTextColor),
               content:
-                  Text("the phone number or password entered is incorrect try again ",textAlign: TextAlign.center,style: TextStyle(color: kTextColor)),
+                  Text("the username or password entered is incorrect try again ",textAlign: TextAlign.center,style: TextStyle(color: kTextColor)),
               actions: [
                 TextButton(
                     onPressed: () {
@@ -159,23 +159,17 @@ class _LoginPageState extends State<LoginPage> {
                                   padding: EdgeInsets.all(kDefaultCategoryPaddin),
                                   child: TextFormField(
                                     decoration:
-                                        InputDecoration(labelText: "Phone"),
-                                    keyboardType: TextInputType.phone,
+                                        InputDecoration(labelText: "Phone or Email"),
                                     validator: (text) {
-                                      if (text!.length < 10) {
-                                        return "The number cannot be less than 10 digits";
-                                      } else if (text!.length > 10) {
-                                        return "The number cannot be more than 10 digits";
-                                      } else if (!RegExp(r"^[0-9]+")
-                                          .hasMatch(text)) {
-                                        return "The number cannot contain letters or symbols";
+                                      if (text!.length<8) {
+                                        return "can't let the text empty";
                                       } else {
                                         return null;
                                       }
                                     },
                                     onSaved: (value) {
-                                      phoneNumber = "+970${value}";
-                                      print(phoneNumber);
+                                      username = "${value}";
+
                                     },
                                   ),
                                 ),
@@ -232,15 +226,88 @@ class _LoginPageState extends State<LoginPage> {
                                 ),
                                 Container(
                                     margin: EdgeInsets.only(bottom: 15, top: 15),
-                                    child: TextButton(
-                                      onPressed: () {
-                                        Navigator.pushNamed(context, '/signup');
-                                      },
-                                      child: Text(
-                                        "Create New Accent",
-                                        style: TextStyle(color: kTextColor),
-                                      ),
-                                    )),
+                                      child: Column(
+                                        children: [
+                                          Text(
+                                            "Create New Account by",
+                                            style: TextStyle(color: kTextColor),
+                                          ),
+                                          Row(
+                                              crossAxisAlignment: CrossAxisAlignment.center,
+                                              mainAxisAlignment: MainAxisAlignment.center,
+                                              children: [
+                                                Container(
+                                                  margin: EdgeInsets.only(
+                                                      top: 14, right: 14, left: 7, bottom: 0),
+                                                  child: ElevatedButton(
+                                                    onPressed: () {
+                                                      Navigator.pushNamed(context, '/signup');
+                                                    },
+                                                    child: Text("Phone"),
+                                                    style: ElevatedButton.styleFrom(
+                                                      minimumSize: const Size(100, 25),
+                                                      maximumSize: const Size(100, 25),
+                                                      backgroundColor: kDefaultColorButton,
+                                                      textStyle: TextStyle(
+                                                          fontSize: 13,
+                                                          fontWeight: FontWeight.bold),
+                                                      shadowColor: Colors.white,
+                                                      elevation: 5,
+                                                      side: BorderSide(
+                                                          color: Colors
+                                                              .black87, //change border color
+                                                          width: 2, //change border width
+                                                          style: BorderStyle
+                                                              .solid), // change border side of this beautiful button
+                                                      shape: RoundedRectangleBorder(
+                                                        borderRadius: BorderRadius.circular(
+                                                            10), //change border radius of this beautiful button thanks to BorderRadius.circular function
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                                Container(
+                                                  margin: EdgeInsets.only(
+                                                      top: 14, right: 4, left: 4, bottom: 0),
+                                                  child: Text("or",style: TextStyle(color: kTextColor,fontSize: 16),),
+                                                ),
+                                                Container(
+                                                  margin: EdgeInsets.only(
+                                                      top: 14, right: 7, left: 14, bottom: 0),
+                                                  child: ElevatedButton(
+                                                    onPressed: () {
+                                                      Navigator.pushNamed(context, '/signupemail');
+                                                    },
+                                                    child: Text("Email"),
+                                                    style: ElevatedButton.styleFrom(
+                                                      minimumSize: const Size(100, 25),
+                                                      maximumSize: const Size(100, 25),
+                                                      backgroundColor: kDefaultColorButton,
+                                                      textStyle: TextStyle(
+                                                          fontSize: 13,
+                                                          fontWeight: FontWeight.bold),
+                                                      shadowColor: Colors.white,
+                                                      elevation: 5,
+                                                      side: BorderSide(
+                                                          color: Colors
+                                                              .black87, //change border color
+                                                          width: 2, //change border width
+                                                          style: BorderStyle
+                                                              .solid), // change border side of this beautiful button
+                                                      shape: RoundedRectangleBorder(
+                                                        borderRadius: BorderRadius.circular(
+                                                            10), //change border radius of this beautiful button thanks to BorderRadius.circular function
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+
+                                              ],
+                                            ),
+                                        ],
+                                      )
+
+                                    ),
                                 Visibility(
                                   visible: isLoading,
                                   child: Center(

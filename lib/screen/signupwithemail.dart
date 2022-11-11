@@ -9,19 +9,19 @@ import '../model/usermodel.dart';
 import 'package:encrypt/encrypt.dart' as encrypt;
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
-class SignUp extends StatefulWidget {
+class SignUpWithEmail extends StatefulWidget {
   @override
-  State<SignUp> createState() => _SignUpState();
+  State<SignUpWithEmail> createState() => _SignUpState();
 }
 
-class _SignUpState extends State<SignUp> {
-  bool? findPhone;
+class _SignUpState extends State<SignUpWithEmail> {
+  bool? findEmail;
   bool isLoading = false;
   var name;
-  var phoneNumber;
+  var username;
   var password;
   var address;
-  var username;
+  var token;
   var _formKey = GlobalKey<FormState>();
   final auth = FirebaseAuth.instance;
   final db = FirebaseFirestore.instance;
@@ -36,48 +36,75 @@ class _SignUpState extends State<SignUp> {
   }
 
   Future signup() async {
+    isLoading = true;
     String? passEncrypted;
     setState(() {
       passEncrypted = encryptAES(password);
     });
 
+    var register;
     final user = RegisterModel(
-      name: name,
-      username: username,
-      password: passEncrypted,
-      address: address,
-    );
+        name: name,
+        username: username,
+        password: passEncrypted,
+        address: address,
+        token: token);
 
-    FirebaseAuth.instance.verifyPhoneNumber(
-      phoneNumber: phoneNumber,
-      verificationCompleted: (PhoneAuthCredential credential)  {
-      },
-      verificationFailed: (FirebaseAuthException e) {
-        setState(() {
-          isLoading=false;
+    try {
 
-        });
-        print(e.message);
-        if (e.code == 'invalid-phone-number') {
-          print('The provided phone number is not valid.');
-        }
-      },
-      codeSent: (String verificationId, int? resendToken) async {
-        setState(() {
-          isLoading=false;
-
-        });
-        await Navigator.push(context,
-            MaterialPageRoute(builder: (BuildContext context) {
-          return verifyCode(
-            verification: verificationId.toString(),
-            registerModel: user,
-          );
-        }));
-      },
-      timeout: const Duration(seconds: 60),
-      codeAutoRetrievalTimeout: (String verificationId) {},
-    );
+      await auth
+          .createUserWithEmailAndPassword(email: username, password: password).then((value) async =>
+      {
+        if (value != null)
+          {
+            register = db
+                .collection("users")
+                .withConverter(
+              fromFirestore: RegisterModel.fromFirestore,
+              toFirestore: (RegisterModel user, options) =>
+                  user.toFirestore(),
+            )
+                .doc(auth.currentUser?.uid),
+            user.token = auth.currentUser?.uid.toString(),
+            await register.set(user),
+            showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                      title: Text(
+                        "Successfully",
+                        textAlign: TextAlign.center,
+                      ),
+                      titleTextStyle: TextStyle(color: Colors.black),
+                      content: Text(
+                        "The registration process has been completed successfully",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(color: Colors.black),
+                      ),
+                      actions: [
+                        TextButton(
+                            onPressed: () {
+                              Navigator.pushNamed(context, '/login');
+                            },
+                            child: Text("Ok"))
+                      ],
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(5),
+                      ));
+                })
+          }
+     }
+     );
+    } on FirebaseAuthException catch (e) {
+      print(e.message);
+      setState(() {
+        isLoading=false;
+      });
+      if (e.code == 'email-already-in-use') {
+        _showDialog();
+        print('email-already-in-use');
+      }
+    }
   }
 
   void _showDialog() {
@@ -112,19 +139,8 @@ class _SignUpState extends State<SignUp> {
     final isValid = _formKey.currentState!.validate();
     if (isValid) {
       _formKey.currentState!.save();
-      await db
-          .collection("users")
-          .where("username", isEqualTo: username)
-          .get()
-          .then((value) => {
-                findPhone = value.docs.isEmpty,
-              });
-      if (findPhone == false) {
-        _showDialog();
-      } else if (findPhone == true) {
-        isLoading = true;
-        signup();
-      }
+
+      signup();
     }
   }
 
@@ -196,22 +212,16 @@ class _SignUpState extends State<SignUp> {
                             margin: EdgeInsets.all(kDefaultTextFieldMargin),
                             padding: EdgeInsets.all(kDefaultCategoryPaddin),
                             child: TextFormField(
-                              decoration: InputDecoration(labelText: "Phone"),
-                              keyboardType: TextInputType.phone,
+                              decoration: InputDecoration(labelText: "Email"),
                               validator: (text) {
-                                if (text!.length < 10) {
-                                  return "The number cannot be less than 10 digits";
-                                } else if (text!.length > 10) {
-                                  return "The number cannot be more than 10 digits";
-                                } else if (!RegExp(r"^[0-9]+").hasMatch(text)) {
-                                  return "The number cannot contain letters or symbols";
+                                if (!RegExp(r"^[a-z A-Z]+").hasMatch(text!)) {
+                                  return "The Email Valida";
                                 } else {
                                   return null;
                                 }
                               },
                               onSaved: (value) {
-                                phoneNumber = '+970${value}';
-                                username=value;
+                                username = value;
                               },
                             ),
                           ),

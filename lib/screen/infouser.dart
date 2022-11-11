@@ -104,7 +104,7 @@ class _InfoUserState extends State<InfoUser> {
                             padding: EdgeInsets.all(15),
                             height: 60,
                             width: MediaQuery.of(context).size.width* 0.90,
-                            child: Text('${data.docs[0]['phone']}'),
+                            child: Text('${data.docs[0]['username']}'),
                             decoration: BoxDecoration(
                               color: Colors.white,
                               borderRadius: BorderRadius.only(
