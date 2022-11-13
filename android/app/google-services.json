@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "855543465106",
+    "firebase_url": "https://chic-store-688f9-default-rtdb.firebaseio.com",
+    "project_id": "chic-store-688f9",
+    "storage_bucket": "chic-store-688f9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:855543465106:android:4096f83f80831679acd24b",
+        "android_client_info": {
+          "package_name": "net.chic.store.ps.chic_store"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "855543465106-5m3qqbkhujsni2pnd9e1ajqgnff9ei84.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "net.chic.store.ps.chic_store",
+            "certificate_hash": "e460392270ffeb59b97f1171490dd4a18b428e33"
+          }
+        },
+        {
+          "client_id": "855543465106-ot9iothib1drq16u00sklkv3eucom8pa.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB5QdxuKKPAs9lUjMR3fPk-aU5mQtXCBv0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "855543465106-ot9iothib1drq16u00sklkv3eucom8pa.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
