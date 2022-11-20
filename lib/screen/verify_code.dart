@@ -6,18 +6,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:pinput/pinput.dart';
 
-class verifyCode extends StatefulWidget {
+class VerifyCode extends StatefulWidget {
   final String verification;
   final RegisterModel registerModel;
-  const verifyCode(
+  const VerifyCode(
       {Key? key, required this.verification, required this.registerModel})
       : super(key: key);
 
   @override
-  State<verifyCode> createState() => _verifyCodeState();
+  State<VerifyCode> createState() => _VerifyCodeState();
 }
 
-class _verifyCodeState extends State<verifyCode> {
+class _VerifyCodeState extends State<VerifyCode> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final db = FirebaseFirestore.instance;
   var register;

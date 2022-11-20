@@ -34,7 +34,7 @@ class _LoginPageState extends State<LoginPage> {
   }
   _saveToken(String token) async {
     final prefs = await SharedPreferences.getInstance();
-    final value = token;
+    final value = decryptAES(token);
     prefs.setString(KEY_ACCESS_TOKEN, value);
   }
 
@@ -54,7 +54,7 @@ class _LoginPageState extends State<LoginPage> {
            isLoading=true;
 
            Navigator.of(context).pushReplacement(
-              MaterialPageRoute(builder: (context) => homeNavigationBar()));
+              MaterialPageRoute(builder: (context) => HomeNavigationBar()));
          }
       });
       setState(() {

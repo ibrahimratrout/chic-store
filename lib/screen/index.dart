@@ -6,13 +6,13 @@ import 'package:chic_store/screen/searchpage.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class homeNavigationBar extends StatefulWidget {
-  const homeNavigationBar({Key? key}) : super(key: key);
+class HomeNavigationBar extends StatefulWidget {
+  const HomeNavigationBar({Key? key}) : super(key: key);
   @override
-  State<homeNavigationBar> createState() => _homeNavigationBarState();
+  State<HomeNavigationBar> createState() => _HomeNavigationBarState();
 }
 
-class _homeNavigationBarState extends State<homeNavigationBar> {
+class _HomeNavigationBarState extends State<HomeNavigationBar> {
   final screen = [HomePage(), SearchPage(), Profile()];
   int _selectedScreenIndex = 0;
   void _selectScreen(int index) {
