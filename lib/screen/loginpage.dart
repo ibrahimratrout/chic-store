@@ -24,7 +24,14 @@ class _LoginPageState extends State<LoginPage> {
   static var decrypted;
 
   final db = FirebaseFirestore.instance;
-
+  static Encrypted? encrypted;
+  String encryptAES(plainText) {
+    final key = encrypt.Key.fromUtf8('my32lengthsupersecretnooneknows1');
+    final iv = IV.fromLength(16);
+    final encrypter = Encrypter(AES(key));
+    encrypted = encrypter.encrypt(plainText, iv: iv);
+    return encrypted!.base64;
+  }
   String decryptAES(plainText){
     final key = encrypt.Key.fromUtf8('my32lengthsupersecretnooneknows1');
     final iv = IV.fromLength(16);
@@ -34,7 +41,7 @@ class _LoginPageState extends State<LoginPage> {
   }
   _saveToken(String token) async {
     final prefs = await SharedPreferences.getInstance();
-    final value = decryptAES(token);
+    final value = encryptAES(token);
     prefs.setString(KEY_ACCESS_TOKEN, value);
   }
 

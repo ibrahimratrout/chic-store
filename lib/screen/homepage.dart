@@ -9,6 +9,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../constants/constants.dart';
 import '../widgets/loadingWidget.dart';
+import 'loginpage.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -29,15 +30,54 @@ class _HomePageState extends State<HomePage> {
     final key = 'access_token';
     token = prefs.getString(key);
   }
+  logout() async{
+    final prefs = await SharedPreferences.getInstance();
+    final removeAccessToken = await prefs.remove(KEY_ACCESS_TOKEN);
+    Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (context) => LoginPage()));
+  }
     @override
   void initState() {
     super.initState();
     readToken();
   }
-
+  GlobalKey<ScaffoldState> scaffoldState = new GlobalKey();
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
+      key: scaffoldState,
+      drawer: Drawer(
+        child:
+        Column(
+            children: [
+              ListTile(
+                leading: Icon(Icons.home,),
+                title: Text("Home"),
+                onTap: () {
+                  scaffoldState.currentState!.closeDrawer();
+                } ,
+              ),
+              ListTile(
+                leading: Icon(Icons.person,),
+                title: Text("My Account"),
+                onTap: () { Navigator.pushNamed(context, '/infouser');} ,
+              ),
+              ListTile(
+                leading: Icon(Icons.help,),
+                title: Text("Help"),
+                onTap: () {} ,
+              ),
+
+              ListTile(
+                leading: Icon(Icons.logout),
+                title: Text("Logout"),
+                onTap: () {
+                  logout();
+                } ,
+              ),
+
+
+            ]),),
       appBar: AppBar(
         backgroundColor: kDefaultAppBarBackgroundColor,
         title: Text(
@@ -52,7 +92,10 @@ class _HomePageState extends State<HomePage> {
             color: kDefaultAppBarIconColor,
           ),
           splashColor: Colors.black,
-          onPressed: () {},
+          onPressed: () {
+
+            scaffoldState.currentState!.openDrawer();
+          },
         ),
         actions: [
           IconButton(

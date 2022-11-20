@@ -1,10 +1,8 @@
 import 'package:chic_store/constants/constants.dart';
 import 'package:chic_store/screen/homepage.dart';
-import 'package:chic_store/screen/loginpage.dart';
 import 'package:chic_store/screen/profilepage.dart';
 import 'package:chic_store/screen/searchpage.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeNavigationBar extends StatefulWidget {
   const HomeNavigationBar({Key? key}) : super(key: key);
@@ -27,6 +25,7 @@ class _HomeNavigationBarState extends State<HomeNavigationBar> {
       onWillPop: () async => false,
       child: SafeArea(
           child: Scaffold(
+
         body: screen[_selectedScreenIndex],
         bottomNavigationBar: BottomNavigationBar(
           currentIndex: _selectedScreenIndex,
