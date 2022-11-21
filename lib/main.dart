@@ -23,6 +23,7 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   String? token;
   bool login = true;
+
   @override
   Widget build(BuildContext context) {
     if (login) {
