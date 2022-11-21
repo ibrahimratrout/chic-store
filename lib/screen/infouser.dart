@@ -1,10 +1,11 @@
 import 'package:chic_store/constants/constants.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:encrypt/encrypt.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:encrypt/encrypt.dart' as encrypt;
 
 class InfoUser extends StatefulWidget {
-  const InfoUser({Key? key}) : super(key: key);
 
   @override
   State<InfoUser> createState() => _InfoUserState();
@@ -18,13 +19,19 @@ class _InfoUserState extends State<InfoUser> {
         .where("token", isEqualTo: token)
         .snapshots();
   }
+  String decryptAES(plainText){
+    final key = encrypt.Key.fromUtf8('my32lengthsupersecretnooneknows1');
+    final iv = IV.fromLength(16);
+    final encrypter = Encrypter(AES(key));
+    final encrypted = encrypter.encrypt(plainText, iv: iv);
+    return encrypted!.base64;
+  }
   readToken() async {
     final prefs = await SharedPreferences.getInstance();
-    final key = 'access_token';
+    final key = KEY_ACCESS_TOKEN;
     final value = prefs.get(key) ?? 0;
-    setState(() {
-      token=value.toString();
-    });
+    final  token = decryptAES(value.toString());
+
   }
 
   @override

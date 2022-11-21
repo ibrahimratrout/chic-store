@@ -69,7 +69,7 @@ class _SignUpState extends State<SignUp> {
         });
         await Navigator.push(context,
             MaterialPageRoute(builder: (BuildContext context) {
-          return verifyCode(
+          return VerifyCode(
             verification: verificationId.toString(),
             registerModel: user,
           );

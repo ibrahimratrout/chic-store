@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import '../constants/constants.dart';
 import '../widgets/loadingWidget.dart';
+import '../widgets/sizeSelector.dart';
 
 class SingleProduct extends StatefulWidget {
   SingleProduct({required this.productId,});
@@ -24,9 +25,11 @@ class _SingleProductState extends State<SingleProduct> {
   late int primaryColor ;
   late int primaryColorS ;
   var dataColor ;
+  late Map<dynamic,dynamic> dataSizes;
   int indexB = 0 ;
   int indexS = 0 ;
-  late bool isVisible = false ;
+  late bool isVisibleColors = false ;
+  late bool isVisibleSize = false ;
   hexColor(String colorHex){
     String colornew = '0xFF'+colorHex ;
     colornew = colornew.replaceAll('#','');
@@ -55,9 +58,13 @@ class _SingleProductState extends State<SingleProduct> {
             dataColor = snapshot.data?.docs[0]['color'];
             primaryColor = hexColor(dataColor[indexB]);
             primaryColorS = hexColor(dataColor[indexS]);
-            if(snapshot.data?.docs[0]['category_id']=="1") {
-              isVisible = true;
-            }else{ isVisible = false;}
+            if(snapshot.data?.docs[0]['category_id']=="1" || snapshot.data?.docs[0]['category_id']=="3") {
+              isVisibleColors = true;
+            }else{ isVisibleColors = false;}
+            if(snapshot.data?.docs[0]['category_id']=="3") {
+              dataSizes = snapshot.data?.docs[0]['size'];
+              isVisibleSize = true;
+            }else{ isVisibleSize = false;}
             return Scaffold(
               appBar: AppBar(
                 leading: IconButton(
@@ -68,6 +75,7 @@ class _SingleProductState extends State<SingleProduct> {
                   },
                 ),
                 backgroundColor: Colors.black,
+
               ),
               backgroundColor: Color(primaryColor),
               body: Column(
@@ -138,13 +146,26 @@ class _SingleProductState extends State<SingleProduct> {
                                 ),
                                 kDefaultSpace25,
                                 Visibility(
-                                    visible: isVisible,
+                                    visible: isVisibleColors,
                                     child: Column(
                                       crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
                                         Text("Color",style: kDefaultStyleHeadTextSingleProduct),
                                         kDefaultSpace15,
                                         buildColorIcons(),
+                                        kDefaultSpace25,
+                                      ],
+                                    )
+                                ),
+                                Visibility(
+                                    visible: isVisibleSize,
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Text("Size",style: kDefaultStyleHeadTextSingleProduct),
+                                        kDefaultSpace15,
+                                        if(snapshot.data?.docs[0]['category_id']=="3")
+                                        SizeSelector(sizes: dataSizes),
                                         kDefaultSpace25,
                                       ],
                                     )
@@ -212,7 +233,7 @@ class _SingleProductState extends State<SingleProduct> {
         ),
         IconButton(
           icon: Icon(
-            Icons.circle,
+            Icons.square,
             color: Color(myColor).withOpacity(0.65),
             size: 25,
           ),

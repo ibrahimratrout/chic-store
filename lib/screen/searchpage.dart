@@ -29,14 +29,22 @@ class _SearchPageState extends State<SearchPage> {
           extendBodyBehindAppBar: true,
           appBar: AppBar(
               actions: [
+
                 IconButton(
                     icon: Icon(Icons.search),
                     onPressed: () {
                       setState(() {});
                     })
               ],
-              automaticallyImplyLeading: false,
+              leading: IconButton(
+                icon: Icon(Icons.arrow_back),
+                color: Colors.white,
+                iconSize: 15.0,
+                onPressed: () {
+                  Navigator.pushNamed(context, '/');
 
+                },
+              ),
               backgroundColor: Colors.black,
               title: Container(
                 margin: EdgeInsets.all(1),
