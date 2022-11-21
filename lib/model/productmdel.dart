@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class Product {
   String? product_name ;
   String? product_id ;
@@ -6,6 +8,8 @@ class Product {
   List <dynamic>? image ;
   List<dynamic>? color ;
   String? catogery_id;
+  Map <dynamic,dynamic>? size;
+  Timestamp? createdAt ;
 
   Product(
       {  this.product_name,
@@ -14,7 +18,9 @@ class Product {
         this.price,
         this.image,
         this.color,
-        this.catogery_id
+        this.catogery_id,
+        this.size,
+        this.createdAt
       });
 
   factory Product.fromJson (jsonData){
@@ -24,6 +30,8 @@ class Product {
         price: jsonData['price'],
         image: jsonData['image_url'],
         color: jsonData['color'],
-        catogery_id: jsonData['category_id']);
+        catogery_id: jsonData['category_id'],
+        size: jsonData['size'],
+        createdAt: jsonData['created_at']);
   }
 }
